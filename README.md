@@ -1,2 +1,2 @@
 # BrewPie
-Brewing panel
+Backend stuff for the RaspeberryPie
