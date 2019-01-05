@@ -1,2 +1,2 @@
 # BrewPie
-Backend stuff for the RaspeberryPie
+Backend stuff for the Raspeberry PI
