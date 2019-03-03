@@ -1,52 +1,31 @@
 var Firebase = require("./Firebase");
 var Gpio = require('onoff').Gpio;
 
-function generateData(count) {
-    var generatedData = {};
-    var i;
-    var id;
-    var now;
-    var from;
-    var to;
+var bubbleFork = new Gpio(17, 'in', 'rising', {debounceTimeout: 10});
+var count = 0;
 
-    for (i = 0; i < count; i++) {
-        id = i;
-        now = new Date();
-        now.setHours(now.getHours() - (count - i));
-        from = new Date(now);
-        from.setHours(from.getHours() + 1);
-        to = new Date(now);
-
-        generatedData[id] = {
-            from: from.toISOString(),
-            to: to.toISOString(),
-            count: i + 1
-        }
-    }
-
-    return generatedData;
-}
-
-//var generatedData = generateData(10);
-
-var bubbleFork = new Gpio(17, 'in', 'both');
-bubbleFork.watch((error, value) => {
+bubbleFork.watch((error) => {
+    
     if (error) {
         throw error;
     }
 
-    console.log('got ' + value);
+    count++;
+
+    var now = new Date();
+    var nowIso = now.toISOString();
+    var data = {};
+    
+    data[nowIso] = {
+        at: nowIso,
+        count: count
+    }
+
+    console.log('Bubble: count ' + count + ' at ' + nowIso);
+
+    Firebase.fermentations.set(data);
 });
 
 process.on('SIGINT', () => {
     bubbleFork.unexport();
-});  
-
-/*
-    Firebase.fermentations.set(generatedData);
-
-    Firebase.fermentations.once("value", function(snapshot) {
-        console.log(snapshot.val());
-    });
-*/
-
+});
