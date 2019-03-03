@@ -14,16 +14,15 @@ bubbleFork.watch((error) => {
 
     var now = new Date();
     var nowIso = now.toISOString();
-    var data = {};
-    
-    data[nowIso] = {
+    var key = nowIso.replace("\.",":");
+    var data = {
         at: nowIso,
         count: count
     }
 
     console.log('Bubble: count ' + count + ' at ' + nowIso);
 
-    Firebase.fermentations.set(data);
+    Firebase.fermentations.child(key).set(data);
 });
 
 process.on('SIGINT', () => {
