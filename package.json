@@ -1,0 +1,24 @@
+{
+  "name": "brewpie",
+  "version": "0.0.0",
+  "description": "Raspberry pi backend",
+  "main": "Firebase.js",
+  "dependencies": {
+    "firebase-admin": "^7.0.0",
+    "onoff": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MidasBrewing/BrewPie.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MidasBrewing/BrewPie/issues"
+  },
+  "homepage": "https://github.com/MidasBrewing/BrewPie#readme"
+}
