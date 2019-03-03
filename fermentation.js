@@ -29,17 +29,24 @@ function generateData(count) {
 
 //var generatedData = generateData(10);
 
-var bubbleFork = new Gpio(17, 'in');
+var bubbleFork = new Gpio(17, 'in', 'both');
 bubbleFork.watch((error, value) => {
-    console.log("got " + value);
-})
+    if (error) {
+        throw error;
+    }
 
+    console.log('got ' + value);
+});
 
-if (1 === 0) {
+process.on('SIGINT', () => {
+    bubbleFork.unexport();
+});  
+
+/*
     Firebase.fermentations.set(generatedData);
 
     Firebase.fermentations.once("value", function(snapshot) {
         console.log(snapshot.val());
     });
-}
+*/
 
