@@ -1,4 +1,5 @@
 var Firebase = require("./Firebase");
+var Gpio = require('onoff').Gpio;
 
 function generateData(count) {
     var generatedData = {};
@@ -26,13 +27,19 @@ function generateData(count) {
     return generatedData;
 }
 
-var generatedData = generateData(10);
+//var generatedData = generateData(10);
+
+var bubbleFork = new Gpio(17, 'in');
+bubbleFork.watch((error, value) => {
+    console.log("got " + value);
+})
+
 
 if (1 === 0) {
-Firebase.fermentations.set(generatedData);
+    Firebase.fermentations.set(generatedData);
 
-Firebase.fermentations.once("value", function(snapshot) {
-    console.log(snapshot.val());
-});
+    Firebase.fermentations.once("value", function(snapshot) {
+        console.log(snapshot.val());
+    });
 }
 

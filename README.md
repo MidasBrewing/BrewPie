@@ -11,7 +11,7 @@ sudo apt-get install -y nodejs
 sudo npm install -g npm@latest  
 npm init  
 npm install firebase-admin --save  
-npm install onoff  
+npm install onoff --save  
 
 ## hardware
 
