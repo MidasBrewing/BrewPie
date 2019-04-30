@@ -17,12 +17,11 @@ bubbleFork.watch((error) => {
     var nowIso = now.toISOString();
     var key = nowIso.replace("\.",":");
     var data = {
-        batch: Config.batch,
         at: nowIso,
         count: count
     }
 
-    console.log('Bubble: batch: ' + Config.batch + ' count ' + count + ' at ' + nowIso);
+    console.log('Bubble: count ' + count + ' at ' + nowIso);
 
     Firebase.fermentations.child(key).set(data);
 });
