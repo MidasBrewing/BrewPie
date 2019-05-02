@@ -1,31 +1,34 @@
 var Firebase = require("./Firebase");
-var Config = require('./Config');
 var Gpio = require('onoff').Gpio;
 
-var bubbleFork = new Gpio(Config.gpio, 'in', 'rising', {debounceTimeout: 10});
-var count = 0;
-
-bubbleFork.watch((error) => {
+function watch(bubbleFork, batch) {
+    bubbleFork.watch((error) => {
     
-    if (error) {
-        throw error;
-    }
+        if (error) {
+            throw error;
+        }
+        
+        var now = new Date();
+        var nowIso = now.toISOString();
+        var key = nowIso.replace("\.",":");
+        var data = {
+            at: nowIso,
+            count: 1
+        }
+    
+        console.log('Bubble: at ' + nowIso);
+    
+        Firebase.fermentations(batch).child(key).set(data);
+    });
+}
 
-    count++;
+var bubbleForkA = new Gpio(17, 'in', 'rising', {debounceTimeout: 10});
+watch(bubbleForkA, 'A');
 
-    var now = new Date();
-    var nowIso = now.toISOString();
-    var key = nowIso.replace("\.",":");
-    var data = {
-        at: nowIso,
-        count: count
-    }
-
-    console.log('Bubble: count ' + count + ' at ' + nowIso);
-
-    Firebase.fermentations.child(key).set(data);
-});
+var bubbleForkB = new Gpio(27, 'in', 'rising', {debounceTimeout: 10});
+watch(bubbleForkB, 'B');
 
 process.on('SIGINT', () => {
-    bubbleFork.unexport();
+    bubbleForkA.unexport();
+    bubbleForkB.unexport();
 });
