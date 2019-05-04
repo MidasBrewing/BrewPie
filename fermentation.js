@@ -2,12 +2,15 @@ var Gpio = require('onoff').Gpio;
 
 var Firebase = require('./Firebase');
 
+var bubbleForkA;
+var bubbleForkB;
+
 var initialize = () => {
     console.log('Initializing fermentation ...');
-    var bubbleForkA = new Gpio(17, 'in', 'rising', {debounceTimeout: 10});
+    bubbleForkA = new Gpio(17, 'in', 'rising', {debounceTimeout: 10});
     watch(bubbleForkA, 'A');
 
-    var bubbleForkB = new Gpio(27, 'in', 'rising', {debounceTimeout: 10});
+    bubbleForkB = new Gpio(27, 'in', 'rising', {debounceTimeout: 10});
     watch(bubbleForkB, 'B');
 }
 var destroy = () => {
