@@ -22,7 +22,7 @@ var notifyPing = function() {
     notify('Ping');
 }
 
-var notify = function(message) {
+var notify = async function(message) {
     var ref = db.ref("device/fermentation/");
     var ip = await getIp();
     var now = new Date();
