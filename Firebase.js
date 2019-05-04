@@ -24,7 +24,7 @@ var notifyPing = function() {
 
 var notify = function(message) {
     var ref = db.ref("device/fermentation/");
-    var ip = getIp();
+    var ip = await getIp();
     var now = new Date();
     var nowIso = now.toISOString();
 
@@ -53,20 +53,15 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
   
-  async function demo() {
-    console.log('Taking a break...');
-    await sleep(2000);
-    console.log('Two seconds later');
-  }
 async function getIp() {
-    var ip = _getIp();
-    if (ip) {
-        return ip;
-    }
-    sleep(10*1000).then(function() {
+    while(true) {
+        var ip = _getIp();
+        if (!ip) {
+            return ip;
+        }
+        await sleep(10 * 1000);
         console.log('Unable to get IP. retrying ...');
-        getIp();
-    });
+    }
 }
 
 module.exports = {
