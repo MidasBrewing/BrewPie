@@ -52,15 +52,15 @@ var sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
   
-async function getIp() {
-    while(true) {
-        var ip = _getIp();
-        if (ip) {
-            return ip;
-        }
-        await sleep(10 * 1000);
-        console.log('Unable to get IP. retrying ...');
+var getIp = function() {
+    var ip = _getIp();
+    if (ip) {
+        return ip;
     }
+    sleep(10*1000).then(function() {
+        console.log('Unable to get IP. retrying ...');
+        getIp();
+    });
 }
 
 module.exports = {
