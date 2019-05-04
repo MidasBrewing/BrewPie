@@ -30,6 +30,12 @@ watch(bubbleForkA, 'A');
 var bubbleForkB = new Gpio(27, 'in', 'rising', {debounceTimeout: 10});
 watch(bubbleForkB, 'B');
 
+var minutes = 60
+var interval = minutes * 60 * 1000;
+setInterval(function() {
+  Firebase.notifyPing();
+}, interval);
+
 process.on('SIGINT', () => {
     Firebase.notifyDown();
 

@@ -13,23 +13,24 @@ var fermentations = function(batch) {
     return db.ref("fermentations/" + batch);
 }
 var notifyUp = function() {
-    var ref = db.ref("device/fermentation/");
-    var ip = getIp();
-    var now = new Date();
-    var nowIso = now.toISOString();
-
-    ref.child('UP').set({time: nowIso, ip: ip});
+    notify('Up');
 }
 var notifyDown = function() {
+    notify('Down');
+}
+var notifyPing = function() {
+    notify('Ping');
+}
+
+var notify = function(message) {
     var ref = db.ref("device/fermentation/");
     var ip = getIp();
     var now = new Date();
     var nowIso = now.toISOString();
 
-    ref.child('DOWN').set({time: nowIso, ip: ip});
+    ref.child(message).set({time: nowIso, ip: ip});
 }
-
-var getIp = function() {
+var _getIp = function() {
     var ifaces = os.networkInterfaces();
     var ip;
     
@@ -47,9 +48,24 @@ var getIp = function() {
     
     return ip;
 }
+var sleep = function(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+  
+async function getIp() {
+    while(true) {
+        var ip = _getIp();
+        if (ip) {
+            return ip;
+        }
+        await sleep(10 * 1000);
+        console.log('Unable to get IP. retrying ...');
+    }
+}
 
 module.exports = {
     fermentations: fermentations,
     notifyUp: notifyUp,
-    notifyDown: notifyDown
+    notifyDown: notifyDown,
+    notifyPing: notifyPing
 };
