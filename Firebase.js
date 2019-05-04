@@ -1,7 +1,6 @@
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./midasbrewpie-firebase-adminsdk-2019-01-05.json");
-var batch = Config.batch;
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
