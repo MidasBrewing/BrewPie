@@ -1,70 +1,42 @@
-var admin = require("firebase-admin");
-var os = require('os');
+var admin = require('firebase-admin');
 
-var serviceAccount = require("./midasbrewpie-firebase-adminsdk-2019-01-05.json");
+var serviceAccount = require('./midasbrewpie-firebase-adminsdk-2019-01-05.json');
+var db;
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://midasbrewpie.firebaseio.com"
-});
+var initialize = () => {
+    console.log('Initializing Firebase ...');
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: 'https://midasbrewpie.firebaseio.com'
+    });
 
-var db = admin.database();
-var fermentations = function(batch) {
-    return db.ref("fermentations/" + batch);
+    db = admin.database();
 }
-var notifyUp = function() {
-    notify('Up');
+var fermentations = (batch) => {
+    return db.ref('fermentations/' + batch);
 }
-var notifyDown = function() {
-    notify('Down');
+var notifyUp = (ip) => {
+    notify('Up', ip);
 }
-var notifyPing = function() {
-    notify('Ping');
+var notifyDown = (ip) => {
+    notify('Down', ip);
+}
+var notifyPing = (ip) => {
+    notify('Ping', ip);
 }
 
-var notify = async function(message) {
-    var ref = db.ref("device/fermentation/");
-    var ip = await getIp();
+var notify = (message, ip) => {
+    var ref = db.ref('device/fermentation/');
     var now = new Date();
     var nowIso = now.toISOString();
 
-    ref.child(message).set({time: nowIso, ip: ip});
-}
-var _getIp = function() {
-    var ifaces = os.networkInterfaces();
-    var ip;
-    
-    Object.keys(ifaces).forEach(function(ifname) {
-    
-        ifaces[ifname].forEach(function (iface) {
-            if ('IPv4' !== iface.family || iface.internal !== false) {
-                // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-                return;
-            }
-    
-            ip = iface.address;
-        });
-    });   
-    
-    return ip;
-}
+    console.log('Notifying ' + message);
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-  
-async function getIp() {
-    while(true) {
-        var ip = _getIp();
-        if (!ip) {
-            return ip;
-        }
-        await sleep(10 * 1000);
-        console.log('Unable to get IP. retrying ...');
-    }
+    ref.child(message).set({time: nowIso, ip: ip});
 }
 
 module.exports = {
+    initialize: initialize,
     fermentations: fermentations,
     notifyUp: notifyUp,
     notifyDown: notifyDown,

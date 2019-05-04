@@ -1,2 +1,2 @@
 #!/bin/bash
-node ./fermentation.js
+node ./app.js
