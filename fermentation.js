@@ -22,7 +22,7 @@ function watch(bubbleFork, batch) {
     });
 }
 
-Firebase.notifyUp;
+Firebase.notifyUp();
 
 var bubbleForkA = new Gpio(17, 'in', 'rising', {debounceTimeout: 10});
 watch(bubbleForkA, 'A');
@@ -31,8 +31,8 @@ var bubbleForkB = new Gpio(27, 'in', 'rising', {debounceTimeout: 10});
 watch(bubbleForkB, 'B');
 
 process.on('SIGINT', () => {
-    Firebase.notifyDown;
-    
+    Firebase.notifyDown();
+
     bubbleForkA.unexport();
     bubbleForkB.unexport();
 });

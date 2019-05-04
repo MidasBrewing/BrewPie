@@ -18,7 +18,7 @@ var notifyUp = function() {
     var now = new Date();
     var nowIso = now.toISOString();
 
-    ref.child(ip).set("UP-" + nowIso);
+    ref.child('UP').set({time: nowIso, ip: ip});
 }
 var notifyDown = function() {
     var ref = db.ref("device/fermentation/");
@@ -26,7 +26,7 @@ var notifyDown = function() {
     var now = new Date();
     var nowIso = now.toISOString();
 
-    ref.child(ip).set("DOWN-" + nowIso);
+    ref.child('DOWN').set({time: nowIso, ip: ip});
 }
 
 var getIp = function() {
