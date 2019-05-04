@@ -16,7 +16,7 @@ function watch(bubbleFork, batch) {
             count: 1
         }
     
-        console.log('Bubble: at ' + nowIso);
+        console.log('Bubble batch ' + batch + ' at ' + nowIso);
     
         Firebase.fermentations(batch).child(key).set(data);
     });
