@@ -35,7 +35,7 @@ const Firebase = () => {
   };
 };
 
-const firebase = new Firebase();
+const firebase = Firebase();
 
 module.exports = {
   firebase: firebase

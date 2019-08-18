@@ -4,10 +4,10 @@ const Bubbles = () => {
   this.initialize = () => {
     console.log("Initializing bubble counters ...");
 
-    this.bubbleForkA = new BubbleFork("A");
+    this.bubbleForkA = BubbleFork("A");
     this.bubbleForkA.initialize();
 
-    this.bubbleForkB = new BubbleFork("B");
+    this.bubbleForkB = BubbleFork("B");
     this.bubbleForkB.initialize();
   };
 
@@ -18,7 +18,7 @@ const Bubbles = () => {
   };
 };
 
-const bubbles = new Bubbles();
+const bubbles = Bubbles();
 
 module.exports = {
   bubbles: bubbles
