@@ -1,14 +1,15 @@
 const Gpio = require("onoff").Gpio;
 const BubbleSampler = require("./BubbleSampler");
 
-const BubbleFork = batch => {
+const BubbleFork = (batch, port) => {
   this.batch = batch;
+  this.port = port;
   this.bubbleSampler = BubbleSampler(this.batch);
 
   this.initialize = () => {
     console.log("Initializing bubble fork for batch " + this.batch);
     this.bubbleSampler.initialize();
-    this.input = new Gpio(17, "in", "rising", { debounceTimeout: 10 });
+    this.input = new Gpio(this.port, "in", "rising", { debounceTimeout: 10 });
     this.input.watch(watcher);
   };
 

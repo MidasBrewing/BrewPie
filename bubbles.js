@@ -4,10 +4,10 @@ const Bubbles = () => {
   this.initialize = () => {
     console.log("Initializing bubble counters ...");
 
-    this.bubbleForkA = BubbleFork("A");
+    this.bubbleForkA = BubbleFork("A", 17);
     this.bubbleForkA.initialize();
 
-    this.bubbleForkB = BubbleFork("B");
+    this.bubbleForkB = BubbleFork("B", 27);
     this.bubbleForkB.initialize();
   };
 
