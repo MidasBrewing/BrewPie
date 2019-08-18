@@ -60,7 +60,7 @@ function BubbleSampler(batch) {
     };
 
     console.log(
-      "Sending " + count + " bubbles in batch " + batch + " at " + nowIso
+      "Sending " + count + " bubbles in batch " + batch + " at " + now
     );
 
     firebase
