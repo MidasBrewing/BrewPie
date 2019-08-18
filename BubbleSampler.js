@@ -64,6 +64,8 @@ const BubbleSampler = batch => {
       .child(key)
       .set(data);
   };
+
+  return this;
 };
 
 module.exports = BubbleSampler;

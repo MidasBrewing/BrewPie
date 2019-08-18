@@ -33,6 +33,8 @@ const Firebase = () => {
 
     ref.child(message).set({ time: now, ip: ip });
   };
+
+  return this;
 };
 
 const firebase = Firebase();

@@ -16,6 +16,8 @@ const Bubbles = () => {
     this.bubbleForkA.destroy();
     this.bubbleForkB.destroy();
   };
+
+  return this;
 };
 
 const bubbles = Bubbles();

@@ -22,6 +22,8 @@ const BubbleFork = batch => {
     }
     this.bubbleSampler.recordBubble();
   };
+
+  return this;
 };
 
 module.exports = BubbleFork;
