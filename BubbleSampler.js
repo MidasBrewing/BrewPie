@@ -14,7 +14,7 @@ function BubbleSampler(batch) {
     this.sendAttemptCount = 0;
 
     this.sendInterval = setInterval(() => {
-      console.log("Maybe sending bubbles for batch " + this.batch);
+      //console.log("Maybe sending bubbles for batch " + this.batch);
       this.sendAttemptCount = this.sendAttemptCount + 1;
       if (this.currentCount === 0) {
         return;
@@ -32,7 +32,7 @@ function BubbleSampler(batch) {
   };
 
   this.recordBubble = () => {
-    console.log("Record bubble for batch " + this.batch);
+    //console.log("Record bubble for batch " + this.batch);
     const now = new Date();
     if (this.lastBubbleAt) {
       const diffInMs = now.getTime() - this.lastBubbleAt.getTime();
