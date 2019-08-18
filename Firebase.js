@@ -1,44 +1,42 @@
-var admin = require('firebase-admin');
+const admin = require("firebase-admin");
+const serviceAccount = require("./midasbrewpie-firebase-adminsdk-2019-01-05.json");
+const utils = require("./utils");
 
-var serviceAccount = require('./midasbrewpie-firebase-adminsdk-2019-01-05.json');
-var db;
-
-var initialize = () => {
-    console.log('Initializing Firebase ...');
+const Firebase = () => {
+  this.initialize = () => {
+    console.log("Initializing Firebase ...");
     admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        databaseURL: 'https://midasbrewpie.firebaseio.com'
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: "https://midasbrewpie.firebaseio.com"
     });
 
-    db = admin.database();
-}
-var fermentations = (batch) => {
-    return db.ref('fermentations/' + batch);
-}
-var notifyUp = (ip) => {
-    notify('Up', ip);
-}
-var notifyDown = (ip) => {
-    notify('Down', ip);
-}
-var notifyPing = (ip) => {
-    notify('Ping', ip);
-}
+    this.db = admin.database();
+  };
+  this.bubbles = batch => {
+    return this.db.ref("fermentation/bubbles/" + batch);
+  };
+  this.notifyUp = ip => {
+    notify("Up", ip);
+  };
+  this.notifyDown = ip => {
+    notify("Down", ip);
+  };
+  this.notifyPing = ip => {
+    notify("Ping", ip);
+  };
 
-var notify = (message, ip) => {
-    var ref = db.ref('device/fermentation/');
-    var now = new Date();
-    var nowIso = now.toISOString();
+  const notify = (message, ip) => {
+    const ref = this.db.ref("device/fermentation/");
+    const now = utils.now();
 
-    console.log('Notifying ' + message);
+    console.log("Notifying " + message);
 
-    ref.child(message).set({time: nowIso, ip: ip});
-}
+    ref.child(message).set({ time: now, ip: ip });
+  };
+};
+
+const firebase = new Firebase();
 
 module.exports = {
-    initialize: initialize,
-    fermentations: fermentations,
-    notifyUp: notifyUp,
-    notifyDown: notifyDown,
-    notifyPing: notifyPing
+  firebase: firebase
 };

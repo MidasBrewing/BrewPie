@@ -1,7 +1,6 @@
 # BrewPie
 
-Backend stuff for the Raspeberry PI  
-test with: node ./fermentationDataGen.js  
+Backend stuff for the Raspeberry PI
 
 ## install on raspberry
 
@@ -11,8 +10,10 @@ sudo apt-get install -y nodejs
 sudo npm install -g npm@latest  
 npm init  
 npm install firebase-admin --save  
-npm install onoff --save  
+npm install onoff --save
+
+autostart using /etc/rc.local
 
 ## hardware
 
-https://www.electrokit.com/produkt/modul-med-optisk-lasgaffel/  
+https://www.electrokit.com/produkt/modul-med-optisk-lasgaffel/

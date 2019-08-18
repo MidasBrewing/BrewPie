@@ -1,59 +1,35 @@
-var os = require('os');
+const firebase = require("./firebase");
+const bubbles = require("./bubbles");
+const utils = require("./utils");
 
-var Firebase = require("./Firebase");
-var fermentation = require('./fermentation');
+const app = () => {
+  firebase.initialize();
+  bubbles.initialize();
 
-var ip; 
+  var ip;
 
-var secs = (secs) => {
-    return secs * 1000;
-}
-var mins = (mins) => {
-    return mins * secs(60);
-}
+  var initInterval = setInterval(() => {
+    console.log("Getting IP ...");
+    ip = utils.getIp();
+    if (ip) {
+      console.log("IP is " + ip);
+      firebase.notifyUp(ip);
+      clearInterval(initInterval);
+    }
+  }, utils.secs(10));
 
-var setIp = () => {
-    var ifaces = os.networkInterfaces();
-    
-    Object.keys(ifaces).forEach(function(ifname) {
-    
-        ifaces[ifname].forEach(function (iface) {
-            if ('IPv4' !== iface.family || iface.internal !== false) {
-                // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-                return;
-            }
-    
-            ip = iface.address;
-        });
-    });   
-}
+  setInterval(() => {
+    if (ip) {
+      firebase.notifyPing(ip);
+    }
+  }, utils.mins(60));
 
-var app = () => {
-    Firebase.initialize();
-    fermentation.initialize();
-    
-    var initInterval = setInterval(() => {
-        console.log('Getting IP ...');
-        setIp();
-        if (ip) {
-            Firebase.notifyUp(ip);
-            clearInterval(initInterval);
-        }
-    }, secs(10));
-
-    setInterval(() => {
-        if (ip) {
-            Firebase.notifyPing(ip);
-        }
-    }, mins(60));
-
-    process.on('SIGINT', () => {
-        if (ip) {
-            Firebase.notifyDown(ip);
-        }
-
-        fermentation.destroy();
-    });
-}
+  process.on("SIGINT", () => {
+    if (ip) {
+      firebase.notifyDown(ip);
+    }
+    bubbles.destroy();
+  });
+};
 
 app();
