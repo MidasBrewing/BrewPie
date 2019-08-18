@@ -4,7 +4,7 @@ const utils = require("./utils");
 const leastTimeBetweenBubblesInMs = utils.secs(5);
 const sendIntervalInMs = utils.mins(1);
 const frequentSendCount = 60;
-let sendNext = false;
+var sendNext = false;
 
 function BubbleSampler(batch) {
   this.batch = batch;
