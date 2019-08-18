@@ -5,7 +5,7 @@ const leastTimeBetweenBubblesInMs = utils.secs(5);
 const sendIntervalInMs = utils.mins(1);
 const frequentSendCount = 60;
 
-const BubbleSampler = batch => {
+function BubbleSampler(batch) {
   this.batch = batch;
 
   this.initialize = () => {
@@ -70,6 +70,6 @@ const BubbleSampler = batch => {
   };
 
   return this;
-};
+}
 
 module.exports = BubbleSampler;

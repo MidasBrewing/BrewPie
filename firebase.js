@@ -2,7 +2,7 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./midasbrewpie-firebase-adminsdk-2019-01-05.json");
 const utils = require("./utils");
 
-const Firebase = () => {
+function Firebase() {
   this.initialize = () => {
     console.log("Initializing Firebase ...");
     admin.initializeApp({
@@ -35,8 +35,8 @@ const Firebase = () => {
   };
 
   return this;
-};
+}
 
-const firebase = Firebase();
+const firebase = new Firebase();
 
 module.exports = firebase;

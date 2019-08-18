@@ -1,10 +1,10 @@
 const Gpio = require("onoff").Gpio;
 const BubbleSampler = require("./BubbleSampler");
 
-const BubbleFork = (batch, port) => {
+function BubbleFork(batch, port) {
   this.batch = batch;
   this.port = port;
-  this.bubbleSampler = BubbleSampler(this.batch);
+  this.bubbleSampler = new BubbleSampler(this.batch);
 
   this.initialize = () => {
     console.log("Initializing bubble fork for batch " + this.batch);
@@ -27,6 +27,6 @@ const BubbleFork = (batch, port) => {
   };
 
   return this;
-};
+}
 
 module.exports = BubbleFork;
