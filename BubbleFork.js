@@ -24,6 +24,4 @@ const BubbleFork = batch => {
   };
 };
 
-module.exports = {
-  BubbleFork: BubbleFork
-};
+module.exports = BubbleFork;

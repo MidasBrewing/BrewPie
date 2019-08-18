@@ -37,6 +37,4 @@ const Firebase = () => {
 
 const firebase = Firebase();
 
-module.exports = {
-  firebase: firebase
-};
+module.exports = firebase;

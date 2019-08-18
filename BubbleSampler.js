@@ -66,6 +66,4 @@ const BubbleSampler = batch => {
   };
 };
 
-module.exports = {
-  BubbleSampler: BubbleSampler
-};
+module.exports = BubbleSampler;

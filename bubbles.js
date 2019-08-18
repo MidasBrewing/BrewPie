@@ -20,6 +20,4 @@ const Bubbles = () => {
 
 const bubbles = Bubbles();
 
-module.exports = {
-  bubbles: bubbles
-};
+module.exports = bubbles;
