@@ -3,10 +3,10 @@ const BubbleSampler = require("./BubbleSampler");
 
 const BubbleFork = batch => {
   this.batch = batch;
-  this.bubbleSampler = BubbleSampler(batch);
 
   this.initialize = () => {
     console.log("Initializing bubble fork for batch " + this.batch);
+    this.bubbleSampler = BubbleSampler(batch);
     this.input = new Gpio(17, "in", "rising", { debounceTimeout: 10 });
     this.input.watch(watcher);
   };
