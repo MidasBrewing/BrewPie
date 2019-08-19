@@ -22,7 +22,7 @@ function BubbleSampler(batch) {
         this.sendAttemptCount <= frequentSendCount ||
         this.sendAttemptCount % frequentSendCount === 0;
 
-      if (this.currentCount === 0 || !sendNext) {
+      if (this.currentCount === 0 || !this.sendNext) {
         return;
       }
 
