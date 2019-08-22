@@ -13,7 +13,7 @@ class Firebase {
     });
     this.db = admin.database();
   }
-  bubbles() {
+  bubbles(batch) {
     return this.db.ref("fermentation/bubbles/" + batch);
   }
   notifyUp(ip) {
