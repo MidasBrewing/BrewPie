@@ -12,7 +12,7 @@ class BubbleFork {
     console.log("Initializing bubble fork for batch " + this.batch);
     this.bubbleSampler.initialize();
     this.input = new Gpio(this.port, "in", "rising", { debounceTimeout: 10 });
-    this.input.watch(this._watcher);
+    this.input.watch(this._watcher.bind(this));
   };
   destroy() {
     console.log("Destroying bubble fork for batch " + this.batch);
