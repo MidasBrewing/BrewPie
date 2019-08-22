@@ -1,5 +1,6 @@
 const firebase = require("./firebase");
 const bubbles = require("./bubbles");
+const TempSensor = require("./TempSensor");
 const utils = require("./utils");
 
 class App {
@@ -10,6 +11,7 @@ class App {
   start() {
     firebase.initialize();
     bubbles.initialize();
+    this.tempSensor = new TempSensor();
 
     this.initInterval = setInterval(this._setIp.bind(this), utils.secs(10));
 

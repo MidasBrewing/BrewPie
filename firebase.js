@@ -16,6 +16,9 @@ class Firebase {
   bubbles(batch) {
     return this.db.ref("fermentation/bubbles/" + batch);
   }
+  temp() {
+    return this.db.ref("fermentation/temp");
+  }
   notifyUp(ip) {
     this._notify("Up", ip);
   }

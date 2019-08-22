@@ -4,6 +4,7 @@
   "description": "Raspberry pi backend",
   "main": "Firebase.js",
   "dependencies": {
+    "ds18b20": "^0.1.0",
     "firebase-admin": "^7.0.0",
     "ip": "^1.1.5",
     "onoff": "^4.0.0"
