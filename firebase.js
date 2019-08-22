@@ -4,32 +4,33 @@ const utils = require("./utils");
 
 class Firebase {
   constructor() {}
-  initialize = () => {
+
+  initialize() {
     console.log("Initializing Firebase ...");
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
       databaseURL: "https://midasbrewpie.firebaseio.com"
     });
     this.db = admin.database();
-  };
-  bubbles = batch => {
+  }
+  bubbles() {
     return this.db.ref("fermentation/bubbles/" + batch);
-  };
-  notifyUp = ip => {
+  }
+  notifyUp() {
     this._notify("Up", ip);
-  };
-  notifyDown = ip => {
+  }
+  notifyDown(ip) {
     this._notify("Down", ip);
-  };
-  notifyPing = ip => {
+  }
+  notifyPing(ip) {
     this._notify("Ping", ip);
-  };
-  _notify = (message, ip) => {
+  }
+  _notify(message, ip) {
     const ref = this.db.ref("device/fermentation/");
     const now = utils.now();
     console.log("Notifying " + message);
     ref.child(message).set({ time: now, ip: ip });
-  };
+  }
 }
 
 const firebase = new Firebase();

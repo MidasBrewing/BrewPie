@@ -10,7 +10,7 @@ class BubbleSampler {
     this.batch = batch;
   }
 
-  initialize = () => {
+  initialize() {
     console.log("Initializing bubble sampler for batch " + this.batch);
     this.currentCount = 0;
     this.sendAttemptCount = 0;
@@ -29,8 +29,8 @@ class BubbleSampler {
       this.currentCount = 0;
       this.sendNext = false;
     }, sendIntervalInMs);
-  };
-  recordBubble = () => {
+  }
+  recordBubble() {
     //console.log("Record bubble for batch " + this.batch);
     const now = new Date();
     if (this.lastBubbleAt) {
@@ -41,15 +41,15 @@ class BubbleSampler {
     }
     this.lastBubbleAt = now;
     this.currentCount = this.currentCount + 1;
-  };
-  destroy = () => {
+  }
+  destroy() {
     console.log("Destroying bubble sampler for batch " + this.batch);
     if (this.sendInterval) {
       clearInterval(this.sendInterval);
     }
-  };
+  }
 
-  _sendCount = (batch, count) => {
+  _sendCount(batch, count) {
     const now = utils.now();
     const key = now.replace(".", ":");
     const data = {
@@ -63,7 +63,7 @@ class BubbleSampler {
       .bubbles(batch)
       .child(key)
       .set(data);
-  };
+  }
 }
 
 module.exports = BubbleSampler;
