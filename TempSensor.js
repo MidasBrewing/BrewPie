@@ -1,4 +1,4 @@
-const ds18b20 = require("ds18b20");
+const W1Temp = require("w1temp");
 const utils = require("./utils");
 
 const sendIntervalInMs = utils.mins(1);
@@ -6,36 +6,33 @@ const sendIntervalInMs = utils.mins(1);
 class TempSensor {
   constructor(port) {
     this.port = port;
-    this.temp = null;
   }
 
   initialize() {
-    console.log("Initializing temp sensor");
-    let id;
-    ds18b20.sensors((err, ids) => {
-      id = ids[0];
-    });
-    this.id = id;
-    console.log("Temp sensor id is " + this.id);
-    this._requestTemp();
-    this.readInterval = setInterval(
-      this._requestTemp.bind(this),
-      sendIntervalInMs
-    );
+    console.log("Initializing temp sensor on port " + this.port);
+
+    W1Temp.setGpioData(this.port);
+    this.sensor = await this._getSensor();
+
+    const temp = this.sensor.getTemperature();
+    console.log("Current temp is " + temp + '°C');
+    this._sendUpdate(temp);
+
+    sensor.on('change', this._tempUpdated.bind(this));
   }
   destroy() {
     console.log("Destroying temp sensor");
     clearInterval(this.readInterval);
   }
 
-  _requestTemp() {
-    const currentTemp = ds18b20.temperatureSync(this.id);
-    if (currentTemp !== this.temp) {
-      this.temp = currentTemp;
-      this._sendUpdate(this.temp);
-    }
+  async _getSensor() {
+    const sensorsIds = await W1Temp.getSensorsUids();
+    return await W1Temp.getSensor(sensorsIds[0]);
   }
-
+  _tempUpdated(temp) {
+    console.log('Temp changed to ', temp, '°C');
+    this._sendUpdate(temp);
+  }
   _sendUpdate(temp) {
     const now = utils.now();
     const key = now.replace(".", ":");

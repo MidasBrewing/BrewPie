@@ -11,7 +11,7 @@ class App {
   start() {
     firebase.initialize();
     bubbles.initialize();
-    this.tempSensor = new TempSensor();
+    this.tempSensor = new TempSensor(22);
     this.tempSensor.initialize();
 
     this.initInterval = setInterval(this._setIp.bind(this), utils.secs(10));
