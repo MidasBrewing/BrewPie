@@ -16,7 +16,7 @@ class Firebase {
   bubbles() {
     return this.db.ref("fermentation/bubbles/" + batch);
   }
-  notifyUp() {
+  notifyUp(ip) {
     this._notify("Up", ip);
   }
   notifyDown(ip) {
