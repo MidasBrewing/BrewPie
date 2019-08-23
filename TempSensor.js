@@ -1,24 +1,17 @@
 const W1Temp = require("w1temp");
 const utils = require("./utils");
 
-const sendIntervalInMs = utils.mins(1);
-
 class TempSensor {
-  constructor(port) {
-    this.port = port;
-  }
+  async initialize() {
+    console.log("Initializing temp sensor");
 
-  initialize() {
-    console.log("Initializing temp sensor on port " + this.port);
-
-    W1Temp.setGpioData(this.port);
     this.sensor = await this._getSensor();
 
     const temp = this.sensor.getTemperature();
-    console.log("Current temp is " + temp + '°C');
+    console.log("Current temp is " + temp + "°C");
     this._sendUpdate(temp);
 
-    sensor.on('change', this._tempUpdated.bind(this));
+    sensor.on("change", this._tempUpdated.bind(this));
   }
   destroy() {
     console.log("Destroying temp sensor");
@@ -30,7 +23,7 @@ class TempSensor {
     return await W1Temp.getSensor(sensorsIds[0]);
   }
   _tempUpdated(temp) {
-    console.log('Temp changed to ', temp, '°C');
+    console.log("Temp changed to ", temp, "°C");
     this._sendUpdate(temp);
   }
   _sendUpdate(temp) {

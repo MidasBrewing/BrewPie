@@ -11,8 +11,8 @@ class App {
   start() {
     firebase.initialize();
     bubbles.initialize();
-    this.tempSensor = new TempSensor(22);
-    this.tempSensor.initialize();
+    //this.tempSensor = new TempSensor(22);
+    //this.tempSensor.initialize();
 
     this.initInterval = setInterval(this._setIp.bind(this), utils.secs(10));
 
@@ -26,7 +26,7 @@ class App {
       firebase.notifyDown(this.ip);
     }
     bubbles.destroy();
-    this.tempSensor.destroy();
+    //this.tempSensor.destroy();
   }
   _notifyPing() {
     if (this.ip) {
