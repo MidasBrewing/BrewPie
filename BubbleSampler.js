@@ -7,6 +7,7 @@ const sendIntervalInMs = utils.hours(1);
 class BubbleSampler {
   constructor(batch) {
     this.batch = batch;
+    this.currentCount = 0;
   }
 
   initialize() {
