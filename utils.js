@@ -6,6 +6,9 @@ const secs = secs => {
 const mins = mins => {
   return mins * secs(60);
 };
+const hours = hours => {
+  return hours * mins(60);
+};
 const getIp = () => {
   return ip.address();
 };
@@ -17,6 +20,7 @@ const now = () => {
 module.exports = {
   secs: secs,
   mins: mins,
+  hours: hours,
   getIp: getIp,
   now: now
 };
