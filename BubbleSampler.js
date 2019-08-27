@@ -2,8 +2,7 @@ const firebase = require("./firebase");
 const utils = require("./utils");
 
 const leastTimeBetweenBubblesInMs = utils.secs(5);
-const sendIntervalInMs = utils.mins(1);
-const frequentSendCount = 60;
+const sendIntervalInMs = utils.hours(1);
 
 class BubbleSampler {
   constructor(batch) {
@@ -12,22 +11,11 @@ class BubbleSampler {
 
   initialize() {
     console.log("Initializing bubble sampler for batch " + this.batch);
-    this.currentCount = 0;
-    this.sendAttemptCount = 0;
-    this.sendNext = false;
     this.sendInterval = setInterval(() => {
       //console.log("Maybe sending bubbles for batch " + this.batch);
-      this.sendAttemptCount = this.sendAttemptCount + 1;
-      this.sendNext =
-        this.sendNext ||
-        this.sendAttemptCount <= frequentSendCount ||
-        this.sendAttemptCount % frequentSendCount === 0;
-      if (this.currentCount === 0 || !this.sendNext) {
-        return;
-      }
-      this._sendCount(this.batch, this.currentCount);
+      const count = this.currentCount;
       this.currentCount = 0;
-      this.sendNext = false;
+      this._sendCount(this.batch, count);
     }, sendIntervalInMs);
   }
   recordBubble() {
